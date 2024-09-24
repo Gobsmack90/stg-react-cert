@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth";
+import "./Login.css";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -26,18 +27,20 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <h1>Welcome to Chuck Norris Jokes</h1>
-      <p>You must log in to view the page at {from}</p>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username: <input name="username" type="text" />
-        </label>{" "}
-        <label>
-          Password: <input name="password" type="text" />
-        </label>{" "}
-        <button type="submit">Login</button>
-      </form>
+    <div className="container">
+      <div className="loginBox">
+        <h1 className="title">Welcome to Chuck Norris Jokes</h1>
+        <p>You must log in to view the page at {from}</p>
+        <form onSubmit={handleSubmit} className="loginForm">
+          <label>
+            Username: <input name="username" type="text" />
+          </label>{" "}
+          <label>
+            Password: <input name="password" type="text" />
+          </label>{" "}
+          <button type="submit">Login</button>
+        </form>
+      </div>
     </div>
   );
 };
