@@ -1,8 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth";
 import "./Login.css";
+import { useState } from "react";
 
 const Login = () => {
+  const [showPass, setShowPass] = useState(false);
+
   let navigate = useNavigate();
   let location = useLocation();
   let auth = useAuth();
@@ -34,10 +37,17 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="loginForm">
           <label>
             Username: <input name="username" type="text" />
-          </label>{" "}
+          </label>
           <label>
-            Password: <input name="password" type="text" />
-          </label>{" "}
+            Password:{" "}
+            <input name="password" type={showPass ? "text" : "password"} />{" "}
+            <button
+              type="button"
+              onClick={() => setShowPass((showPass) => !showPass)}
+            >
+              {showPass ? "hide" : "show"}
+            </button>
+          </label>
           <button type="submit">Login</button>
         </form>
       </div>
