@@ -7,16 +7,15 @@ import Layout from "./components/Layout";
 import Home from "./components/Home";
 import NoMatch from "./components/NoMatch";
 import Login from "./components/Login";
-import AuthProvider from "./components/AuthProvider";
-import React from "react";
-import { useAuth } from "./auth";
+import AuthProvider, { useAuth } from "./components/AuthProvider";
+import React, { useState } from "react";
 
 /*
  * Much of the auth side of this app is borrowed and modified from:
  * https://github.com/remix-run/react-router/blob/dev/examples/auth/src/App.tsx
  */
 const App = () => {
-  function RequireAuth({ children }) {
+  const RequireAuth = ({ children }) => {
     let auth = useAuth();
     let location = useLocation();
 
@@ -29,7 +28,7 @@ const App = () => {
     }
 
     return children;
-  }
+  };
 
   return (
     <AuthProvider>

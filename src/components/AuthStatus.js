@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth";
+import { useAuth } from "./AuthProvider";
 
 const AuthStatus = () => {
   let auth = useAuth();
@@ -11,7 +11,7 @@ const AuthStatus = () => {
 
   return (
     <p>
-      Welcome {auth.user}!{" "}
+      Welcome {auth.user.email}!{" "}
       <button
         onClick={() => {
           auth.signout(() => navigate("/"));

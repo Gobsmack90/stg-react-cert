@@ -29,3 +29,9 @@
   gap: 10px;
   align-items: center;
 }
+
+.loading {
+  color: white;
+  font-size: xx-large;
+  text-shadow: 2px 2px 2px gray;
+}
