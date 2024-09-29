@@ -8,7 +8,6 @@ import Home from "./components/Home";
 import NoMatch from "./components/NoMatch";
 import Login from "./components/Login";
 import AuthProvider, { useAuth } from "./components/AuthProvider";
-import React, { useState } from "react";
 
 /*
  * Much of the auth side of this app is borrowed and modified from:
@@ -33,19 +32,33 @@ const App = () => {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/"
-          element={
-            <RequireAuth>
-              <Layout />
-            </RequireAuth>
-          }
-        >
+        <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="categories" element={<Categories />} />
-          <Route path="search" element={<Search />} />
-          <Route path="jokes" element={<Jokes />} />
+          <Route
+            path="categories"
+            element={
+              <RequireAuth>
+                <Categories />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="search"
+            element={
+              <RequireAuth>
+                <Search />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="jokes"
+            element={
+              <RequireAuth>
+                <Jokes />
+              </RequireAuth>
+            }
+          />
+          <Route path="login" element={<Login />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

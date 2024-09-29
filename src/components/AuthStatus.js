@@ -1,25 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
+import "./AuthStatus.css";
 
 const AuthStatus = () => {
   let auth = useAuth();
   let navigate = useNavigate();
 
   if (!auth.user) {
-    return <p>You are not logged in.</p>;
+    return (
+      <div className="welcomeContainer">
+        <p className="welcomeText">You are not signed in.</p>
+        <button className="authBtn" onClick={() => navigate("login")}>
+          Sign in
+        </button>
+      </div>
+    );
   }
 
   return (
-    <p>
-      Welcome {auth.user.email}!{" "}
+    <div className="welcomeContainer">
+      <p className="welcomeText">Welcome {auth.user.email}</p>
       <button
+        className="authBtn"
         onClick={() => {
           auth.signout(() => navigate("/"));
         }}
       >
         Sign out
       </button>
-    </p>
+    </div>
   );
 };
 

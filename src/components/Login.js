@@ -40,7 +40,6 @@ const Login = () => {
 
   const loginBox = (
     <div className="loginBox">
-      <h1 className="title">Welcome to Chuck Norris Jokes</h1>
       <p>You must log in to view the page at {from}</p>
       <form
         onSubmit={handleSubmit((data) => formSubmit(data))}
@@ -81,8 +80,12 @@ const Login = () => {
           </button>
         </label>
         <p>{errors.password?.message}</p>
-        <button type="submit" disabled={!isDirty || !isValid}>
-          Login
+        <button
+          className="authBtn"
+          type="submit"
+          disabled={!isDirty || !isValid}
+        >
+          Sign in
         </button>
       </form>
     </div>
