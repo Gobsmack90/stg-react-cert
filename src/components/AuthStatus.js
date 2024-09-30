@@ -8,8 +8,8 @@ const AuthStatus = () => {
 
   if (!auth.user) {
     return (
-      <div className="welcomeContainer">
-        <p className="welcomeText">You are not signed in.</p>
+      <div className="authContainer">
+        <p className="signInStatus">You are not signed in.</p>
         <button className="authBtn" onClick={() => navigate("login")}>
           Sign in
         </button>
@@ -18,8 +18,8 @@ const AuthStatus = () => {
   }
 
   return (
-    <div className="welcomeContainer">
-      <p className="welcomeText">Welcome {auth.user.email}</p>
+    <div className="authContainer">
+      <p className="signInStatus">{auth.user.email}</p>
       <button
         className="authBtn"
         onClick={() => {

@@ -26,7 +26,11 @@ const Layout = () => {
         <AuthStatus />
       </div>
 
-      <Outlet />
+      <div className="contentContainer">
+        <article className="content">
+          <Outlet />
+        </article>
+      </div>
 
       <div className="footer">
         <nav className="nav">
