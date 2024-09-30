@@ -1,0 +1,30 @@
+.section {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.section:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.right {
+  justify-content: right;
+  text-align: right;
+}
+
+.left {
+  justify-content: left;
+  text-align: left;
+}
+
+.sectionImg {
+  object-fit: cover;
+}
+
+.sectionHead {
+  margin-bottom: 10px;
+  color: darkblue;
+}

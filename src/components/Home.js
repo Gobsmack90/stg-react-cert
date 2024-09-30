@@ -9,19 +9,19 @@ const sectionArr = [
     heading: "Categories",
     details: "A list of all joke categories.",
     url: "/categories",
-    img: "",
+    img: "https://imgur.com/P3dBnWi.jpeg",
   },
   {
     heading: "Search",
     details: "Search for a specific joke.",
     url: "/search",
-    img: "",
+    img: "https://imgur.com/7rGJS0S.jpeg",
   },
   {
     heading: "Jokes",
     details: "See a funny joke.",
     url: "/jokes",
-    img: "",
+    img: "https://imgur.com/qPcIHOz.jpeg",
   },
 ];
 
@@ -29,7 +29,7 @@ const Home = () => {
   let auth = useAuth();
 
   const sectionMap = sectionArr.map((section, i) => {
-    let isOdd = i % 2;
+    const isOdd = (num) => num % 2 === 1;
     return (
       <Section
         key={i}
@@ -37,7 +37,7 @@ const Home = () => {
         details={section.details}
         url={section.url}
         img={section.img}
-        leftSide={isOdd}
+        leftSide={isOdd(i)}
       />
     );
   });
@@ -49,7 +49,7 @@ const Home = () => {
           Welcome {auth.user ? auth.user.email + ", " : ""} to Chuck Norris
           Jokes!
         </h1>
-        {sectionMap}
+        <div className="sections">{sectionMap}</div>
       </div>
     </ContentWrapper>
   );
