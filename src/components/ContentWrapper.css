@@ -1,0 +1,15 @@
+.contentContainer {
+  display: block;
+  background: url("../assets/american-flags.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  width: 80%;
+  max-width: 1200px;
+  padding: 100px;
+  margin: auto;
+  background-color: white;
+  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.7), -5px 0px 10px rgba(0, 0, 0, 0.7);
+}

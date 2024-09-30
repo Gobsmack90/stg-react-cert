@@ -53,19 +53,6 @@
   border: none;
 }
 
-.contentContainer {
-  background: url("../assets/american-flags.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.content {
-  width: 80%;
-  max-width: 1000px;
-  margin: auto;
-  background-color: white;
-}
-
 .footer {
   padding: 40px 0;
   display: flex;

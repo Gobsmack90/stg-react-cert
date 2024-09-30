@@ -1,4 +1,5 @@
 import { useAuth } from "./AuthProvider";
+import ContentWrapper from "./ContentWrapper";
 import "./Home.css";
 import Section from "./Section";
 
@@ -42,12 +43,15 @@ const Home = () => {
   });
 
   return (
-    <div className="home">
-      <h1 className="welcomeHome">
-        Welcome {auth.user ? auth.user.email + ", " : ""} to Chuck Norris Jokes!
-      </h1>
-      {sectionMap}
-    </div>
+    <ContentWrapper>
+      <div className="home">
+        <h1 className="welcomeHome">
+          Welcome {auth.user ? auth.user.email + ", " : ""} to Chuck Norris
+          Jokes!
+        </h1>
+        {sectionMap}
+      </div>
+    </ContentWrapper>
   );
 };
 

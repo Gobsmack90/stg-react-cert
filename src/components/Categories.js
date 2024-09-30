@@ -1,5 +1,11 @@
+import ContentWrapper from "./ContentWrapper";
+
 const Categories = () => {
-  return <div>Categories</div>;
+  return (
+    <ContentWrapper>
+      <div>Categories</div>
+    </ContentWrapper>
+  );
 };
 
 export default Categories;

@@ -1,5 +1,11 @@
+import ContentWrapper from "./ContentWrapper";
+
 const Search = () => {
-  return <div>Search</div>;
+  return (
+    <ContentWrapper>
+      <div>Search</div>
+    </ContentWrapper>
+  );
 };
 
 export default Search;

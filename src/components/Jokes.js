@@ -1,5 +1,11 @@
+import ContentWrapper from "./ContentWrapper";
+
 const Jokes = () => {
-  return <div>Jokes</div>;
+  return (
+    <ContentWrapper>
+      <div>Jokes</div>
+    </ContentWrapper>
+  );
 };
 
 export default Jokes;
