@@ -40,7 +40,10 @@ const Login = () => {
 
   const loginBox = (
     <div className="loginBox">
-      <p>You must log in to view the page at {from}</p>
+      {from !== "/" && (
+        <h2 className="redirectMessage">Log in to view: {from}</h2>
+      )}
+
       <form
         onSubmit={handleSubmit((data) => formSubmit(data))}
         className="loginForm"
@@ -57,8 +60,9 @@ const Login = () => {
             })}
             type="text"
           />
+          <p className="error">{errors.email?.message}</p>
         </label>
-        <p>{errors.email?.message}</p>
+
         <label>
           Password:{" "}
           <input
@@ -73,13 +77,15 @@ const Login = () => {
             type={showPass ? "text" : "password"}
           />{" "}
           <button
+            className="showPass"
             type="button"
             onClick={() => setShowPass((showPass) => !showPass)}
           >
             {showPass ? "hide" : "show"}
           </button>
+          <p className="error">{errors.password?.message}</p>
         </label>
-        <p>{errors.password?.message}</p>
+
         <button
           className="authBtn"
           type="submit"

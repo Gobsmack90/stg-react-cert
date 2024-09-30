@@ -17,11 +17,61 @@
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.7);
 }
 
+.redirectMessage {
+  text-align: center;
+  color: darkblue;
+  padding-bottom: 10px;
+  border-bottom: 2px solid slategray;
+  margin-bottom: 10px;
+}
+
 .loginForm {
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: center;
+}
+
+label {
+  font-size: 14px;
+}
+
+input {
+  border: 1px solid slategray;
+  outline: none;
+  border-radius: 5px;
+}
+
+.showPass {
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(179, 0, 0),
+    rgb(99, 9, 9)
+  );
+  color: white;
+  height: 20px;
+  border: none;
+  outline: none;
+  width: 70px;
+  border-radius: 15px;
+  font-size: medium;
+  font-weight: 600;
+  box-shadow: 5px 3px 4px rgba(0, 0, 0, 0.5);
+}
+
+.showPass:hover {
+  cursor: pointer;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(124, 0, 0),
+    rgb(46, 4, 4)
+  );
+}
+
+.error {
+  color: darkred;
+  text-align: center;
+  font-size: 12px;
 }
 
 .loading {
