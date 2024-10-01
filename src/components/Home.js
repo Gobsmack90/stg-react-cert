@@ -1,7 +1,7 @@
 import { useAuth } from "./AuthProvider";
 import ContentWrapper from "./ContentWrapper";
+import { Link } from "react-router-dom";
 import "./Home.css";
-import Section from "./Section";
 
 //create array of objects that contain details needed for sections. heading, details, url, img
 const sectionArr = [
@@ -25,6 +25,30 @@ const sectionArr = [
   },
 ];
 
+const Section = ({ heading, details, url, img, leftSide }) => {
+  const sectionImage = (
+    <img
+      className="sectionImg"
+      src={img}
+      alt="Chuck Norris"
+      width="100"
+      height="100"
+    />
+  );
+  return (
+    <Link to={url}>
+      <section className={leftSide ? "left section" : "right section"}>
+        {leftSide && sectionImage}
+        <div className="sectionInfo">
+          <h2 className="sectionHead">{heading}</h2>
+          <p>{details}</p>
+        </div>
+        {!leftSide && sectionImage}
+      </section>
+    </Link>
+  );
+};
+
 const Home = () => {
   let auth = useAuth();
 
@@ -43,7 +67,7 @@ const Home = () => {
   });
 
   return (
-    <ContentWrapper>
+    <ContentWrapper title="Home">
       <div className="home">
         <h1 className="welcomeHome">
           Welcome {auth.user ? auth.user.email + ", " : ""} to Chuck Norris

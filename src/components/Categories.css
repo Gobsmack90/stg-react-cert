@@ -1,0 +1,37 @@
+.categoryList {
+  width: 80%;
+  max-width: 700px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.categoryHead {
+  text-transform: capitalize;
+}
+
+.showJoke {
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(179, 0, 0),
+    rgb(99, 9, 9)
+  );
+  color: white;
+  height: 20px;
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  font-size: medium;
+  font-weight: 600;
+  box-shadow: 5px 3px 4px rgba(0, 0, 0, 0.5);
+}
+
+.showJoke:hover {
+  cursor: pointer;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(124, 0, 0),
+    rgb(46, 4, 4)
+  );
+}

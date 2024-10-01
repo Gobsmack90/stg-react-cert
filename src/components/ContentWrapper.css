@@ -7,6 +7,16 @@
   padding: 100px 0;
 }
 
+.contentTitle {
+  font-size: 40px;
+  color: rgb(12, 45, 75);
+  text-shadow: 2px 2px 2px rgba(13, 12, 15, 0.5);
+  text-align: center;
+  margin: 40px 80px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid slategray;
+}
+
 .content {
   width: 90%;
   max-width: 1200px;
