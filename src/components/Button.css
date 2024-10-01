@@ -1,0 +1,61 @@
+.largeBtn {
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(0, 0, 0),
+    rgb(61, 61, 61)
+  );
+  color: white;
+  height: 30px;
+  border: none;
+  outline: none;
+  width: 90px;
+  border-radius: 15px;
+  font-size: medium;
+  font-weight: 600;
+  box-shadow: 5px 3px 4px rgba(0, 0, 0, 0.5);
+}
+
+.largeBtn:hover {
+  cursor: pointer;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(31, 31, 31),
+    rgb(80, 80, 80)
+  );
+}
+
+.largeBtn:disabled {
+  cursor: default;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(138, 138, 138),
+    rgb(207, 207, 207)
+  );
+  box-shadow: none;
+}
+
+.smallBtn {
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(179, 0, 0),
+    rgb(99, 9, 9)
+  );
+  color: white;
+  height: 20px;
+  border: none;
+  outline: none;
+  width: 70px;
+  border-radius: 15px;
+  font-size: medium;
+  font-weight: 600;
+  box-shadow: 5px 3px 4px rgba(0, 0, 0, 0.5);
+}
+
+.smallBtn:hover {
+  cursor: pointer;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(124, 0, 0),
+    rgb(46, 4, 4)
+  );
+}

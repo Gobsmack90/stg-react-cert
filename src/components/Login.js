@@ -3,6 +3,7 @@ import "./Login.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "./AuthProvider";
+import Button from "./Button";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
@@ -40,9 +41,9 @@ const Login = () => {
 
   const loginBox = (
     <div className="loginBox">
-      {from !== "/" && (
-        <h2 className="redirectMessage">Log in to view: {from}</h2>
-      )}
+      <h2 className="redirectMessage">
+        Log in {from !== "/" ? " to view " + from : ""}
+      </h2>
 
       <form
         onSubmit={handleSubmit((data) => formSubmit(data))}
@@ -76,23 +77,18 @@ const Login = () => {
             })}
             type={showPass ? "text" : "password"}
           />{" "}
-          <button
-            className="showPass"
-            type="button"
+          <Button
             onClick={() => setShowPass((showPass) => !showPass)}
+            type={"button"}
           >
             {showPass ? "hide" : "show"}
-          </button>
+          </Button>
           <p className="error">{errors.password?.message}</p>
         </label>
 
-        <button
-          className="authBtn"
-          type="submit"
-          disabled={!isDirty || !isValid}
-        >
+        <Button type="submit" isDisabled={!isDirty || !isValid} isLarge>
           Sign in
-        </button>
+        </Button>
       </form>
     </div>
   );
