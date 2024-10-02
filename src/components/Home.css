@@ -34,10 +34,6 @@
   text-align: left;
 }
 
-.sectionImg {
-  object-fit: cover;
-}
-
 .sectionHead {
   margin-bottom: 10px;
   color: darkblue;

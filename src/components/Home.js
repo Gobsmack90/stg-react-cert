@@ -2,6 +2,7 @@ import { useAuth } from "./AuthProvider";
 import ContentWrapper from "./ContentWrapper";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
 
 //create array of objects that contain details needed for sections. heading, details, url, img
 const sectionArr = [
@@ -9,41 +10,29 @@ const sectionArr = [
     heading: "Categories",
     details: "A list of all joke categories.",
     url: "/categories",
-    img: "https://imgur.com/P3dBnWi.jpeg",
   },
   {
     heading: "Search",
     details: "Search for a specific joke.",
     url: "/search",
-    img: "https://imgur.com/7rGJS0S.jpeg",
   },
   {
     heading: "Jokes",
     details: "See a funny joke.",
     url: "/jokes",
-    img: "https://imgur.com/qPcIHOz.jpeg",
   },
 ];
 
-const Section = ({ heading, details, url, img, leftSide }) => {
-  const sectionImage = (
-    <img
-      className="sectionImg"
-      src={img}
-      alt="Chuck Norris"
-      width="100"
-      height="100"
-    />
-  );
+const Section = ({ heading, details, url, leftSide, index }) => {
   return (
     <Link to={url}>
       <section className={leftSide ? "left section" : "right section"}>
-        {leftSide && sectionImage}
+        {leftSide && <NorrisThumb chosenIndex={index} />}
         <div className="sectionInfo">
           <h2 className="sectionHead">{heading}</h2>
           <p>{details}</p>
         </div>
-        {!leftSide && sectionImage}
+        {!leftSide && <NorrisThumb chosenIndex={index} />}
       </section>
     </Link>
   );
@@ -51,6 +40,8 @@ const Section = ({ heading, details, url, img, leftSide }) => {
 
 const Home = () => {
   let auth = useAuth();
+
+  let randomIndexArr = shuffledNorrisImageIndexes(3);
 
   const sectionMap = sectionArr.map((section, i) => {
     const isOdd = (num) => num % 2 === 1;
@@ -62,6 +53,7 @@ const Home = () => {
         url={section.url}
         img={section.img}
         leftSide={isOdd(i)}
+        index={randomIndexArr[i]}
       />
     );
   });
