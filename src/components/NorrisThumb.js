@@ -52,7 +52,7 @@ export const shuffledNorrisImageIndexes = (numIndexesNeeded) => {
 const NorrisThumb = ({ chosenIndex }) => {
   return (
     <img
-      style={{ objectFit: "cover" }}
+      style={{ objectFit: "cover", borderRadius: 4 + "px" }}
       src={NORRIS_IMAGES[chosenIndex]}
       alt="Chuck Norris"
       width="100"

@@ -2,7 +2,7 @@ import ContentWrapper from "./ContentWrapper";
 
 const Search = () => {
   return (
-    <ContentWrapper>
+    <ContentWrapper title="Search">
       <div>Search</div>
     </ContentWrapper>
   );

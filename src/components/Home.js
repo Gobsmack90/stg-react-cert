@@ -65,7 +65,7 @@ const Home = () => {
           Welcome {auth.user ? auth.user.email + ", " : ""} to Chuck Norris
           Jokes!
         </h1>
-        <div className="sections">{sectionMap}</div>
+        <div>{sectionMap}</div>
       </div>
     </ContentWrapper>
   );

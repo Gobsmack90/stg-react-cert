@@ -17,6 +17,12 @@
   border-bottom: 1px solid slategray;
 }
 
+.contentBody {
+  width: 80%;
+  max-width: 700px;
+  margin: 40px auto;
+}
+
 .content {
   width: 90%;
   max-width: 1200px;

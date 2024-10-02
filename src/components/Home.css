@@ -6,12 +6,6 @@
   margin-bottom: 40px;
 }
 
-.sections {
-  width: 80%;
-  max-width: 700px;
-  margin: auto;
-}
-
 .section {
   display: flex;
   gap: 20px;

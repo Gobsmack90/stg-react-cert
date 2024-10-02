@@ -17,6 +17,27 @@ import Login from "./components/Login";
 import AuthProvider, { useAuth } from "./components/AuthProvider";
 import Button from "./components/Button";
 
+const Nav = () => {
+  return (
+    <>
+      <div className="navItem">
+        <Link to="/">Home</Link>
+      </div>
+      <div className="navItem">
+        <Link to="/categories">Categories</Link>
+      </div>
+
+      <div className="navItem">
+        <Link to="/search">Search</Link>
+      </div>
+
+      <div className="navItem">
+        <Link to="/jokes">Jokes</Link>
+      </div>
+    </>
+  );
+};
+
 const Layout = () => {
   return (
     <div className="layout">
@@ -29,30 +50,14 @@ const Layout = () => {
           ></img>
           <h1 className="title">Gobsmack's Chuck Norris Joke Extravaganza</h1>
         </div>
-        <nav className="nav">
-          <Link to="/">Home</Link>
-
-          <Link to="/categories">Categories</Link>
-
-          <Link to="/search">Search</Link>
-
-          <Link to="/jokes">Jokes</Link>
-        </nav>
+        <Nav />
         <AuthStatus />
       </div>
 
       <Outlet />
 
       <div className="footer">
-        <nav className="nav">
-          <Link to="/">Home</Link>
-
-          <Link to="/categories">Categories</Link>
-
-          <Link to="/search">Search</Link>
-
-          <Link to="/jokes">Jokes</Link>
-        </nav>
+        <Nav />
       </div>
     </div>
   );
