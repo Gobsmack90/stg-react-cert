@@ -3,6 +3,7 @@ import "./Login.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "./AuthProvider";
+import Button from "./Button";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
@@ -40,8 +41,10 @@ const Login = () => {
 
   const loginBox = (
     <div className="loginBox">
-      <h1 className="title">Welcome to Chuck Norris Jokes</h1>
-      <p>You must log in to view the page at {from}</p>
+      <h2 className="redirectMessage">
+        Log in {from !== "/" ? " to view " + from : ""}
+      </h2>
+
       <form
         onSubmit={handleSubmit((data) => formSubmit(data))}
         className="loginForm"
@@ -58,8 +61,9 @@ const Login = () => {
             })}
             type="text"
           />
+          <p className="error">{errors.email?.message}</p>
         </label>
-        <p>{errors.email?.message}</p>
+
         <label>
           Password:{" "}
           <input
@@ -73,17 +77,18 @@ const Login = () => {
             })}
             type={showPass ? "text" : "password"}
           />{" "}
-          <button
-            type="button"
+          <Button
             onClick={() => setShowPass((showPass) => !showPass)}
+            type={"button"}
           >
             {showPass ? "hide" : "show"}
-          </button>
+          </Button>
+          <p className="error">{errors.password?.message}</p>
         </label>
-        <p>{errors.password?.message}</p>
-        <button type="submit" disabled={!isDirty || !isValid}>
-          Login
-        </button>
+
+        <Button type="submit" isDisabled={!isDirty || !isValid} isLarge>
+          Sign in
+        </Button>
       </form>
     </div>
   );
