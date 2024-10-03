@@ -1,7 +1,6 @@
 import React from "react";
 import ContentWrapper from "./ContentWrapper";
 import "./Categories.css";
-import Button from "./Button";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
 
 const Category = ({ cat, randomIndex }) => {

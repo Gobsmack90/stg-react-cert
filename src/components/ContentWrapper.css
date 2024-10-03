@@ -3,7 +3,7 @@
   background: url("../assets/american-flags.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: calc(100vh - 116px - 85px);
+  min-height: calc(100vh - 96px - 85px);
   padding: 100px 0;
 }
 
