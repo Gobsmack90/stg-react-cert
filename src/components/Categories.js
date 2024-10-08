@@ -2,16 +2,13 @@ import React from "react";
 import ContentWrapper from "./ContentWrapper";
 import "./Categories.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
+import JokeModal from "./JokeModal";
 
-const Category = ({ cat, randomIndex }) => {
-  const showJoke = () => console.log("hit");
-
+const Category = ({ cat, randomIndex, setSelectedCategory }) => {
   return (
-    <section>
-      <div className="categoryInfo" onClick={showJoke}>
-        <NorrisThumb chosenIndex={randomIndex} />
-        <h2 className="categoryHead">{cat}</h2>
-      </div>
+    <section className="categoryInfo" onClick={() => setSelectedCategory(cat)}>
+      <NorrisThumb chosenIndex={randomIndex} />
+      <h2 className="categoryHead">{cat}</h2>
     </section>
   );
 };
@@ -19,7 +16,7 @@ const Category = ({ cat, randomIndex }) => {
 class Categories extends React.Component {
   constructor() {
     super();
-    this.state = { categories: [], randomIndexes: [] };
+    this.state = { categories: [], randomIndexes: [], selectedCategory: null };
   }
   setCategories = (newCategories) => {
     this.setState({ categories: newCategories });
@@ -27,6 +24,10 @@ class Categories extends React.Component {
 
   setRandomIndexes = (newIndexArr) => {
     this.setState({ randomIndexes: newIndexArr });
+  };
+
+  setSelectedCategory = (category) => {
+    this.setState({ selectedCategory: category });
   };
 
   //Get Api when component mounts.
@@ -43,15 +44,26 @@ class Categories extends React.Component {
   render() {
     return (
       <ContentWrapper title="Categories">
-        <div className="categoryList">
+        <div
+          className={
+            this.state.selectedCategory ? "categoryList blur" : "categoryList"
+          }
+        >
           {this.state.categories.map((e, i) => (
             <Category
               cat={e}
               key={i}
               randomIndex={this.state.randomIndexes[i]}
+              setSelectedCategory={this.setSelectedCategory}
             />
           ))}
         </div>
+        {this.state.selectedCategory && (
+          <JokeModal
+            category={this.state.selectedCategory}
+            setCategory={this.setSelectedCategory}
+          />
+        )}
       </ContentWrapper>
     );
   }
