@@ -105,7 +105,7 @@ Refactor to Utilize Hooks
 Create a new branch called hooks and checkout this branch.
 Choose one of your class components and convert the component into a functional component that utilizes hooks. If you have already written every component in the app as a functional component, convert one of the functional components into a class component that utilizes at least two React lifecycle methods.
 
-if you have already utilized a functional component in the app simply add a commment to identify your use of functional components as directed in the Finish Project section of this document.
+if you have already utilized a functional component in the app simply add a comment to identify your use of functional components as directed in the Finish Project section of this document.
 Make sure to utilize at least 3 hooks in your app. (eg: useState, useEffect, etc)
 
 Save your work and push these changes to Bitbucket.

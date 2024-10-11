@@ -1,6 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setCategories, clearCategories } from "../Redux/categoriesSlice";
+import { clearViewedJokes } from "../Redux/viewedJokesSlice";
 
-export const AuthContext = React.createContext();
+const AuthContext = React.createContext();
 
 export const useAuth = () => {
   return React.useContext(AuthContext);
@@ -14,7 +17,7 @@ const fakeAuthProvider = {
   isAuthenticated: false,
   signin(callback) {
     fakeAuthProvider.isAuthenticated = true;
-    setTimeout(callback, 1500); // fake async
+    setTimeout(callback, 1000); // fake async
   },
   signout(callback) {
     fakeAuthProvider.isAuthenticated = false;
@@ -24,17 +27,26 @@ const fakeAuthProvider = {
 
 const AuthProvider = ({ children }) => {
   let [user, setUser] = React.useState(null);
+  const dispatch = useDispatch();
 
   let signin = (newUser, callback) => {
     return fakeAuthProvider.signin(() => {
       const userObj = JSON.parse(newUser);
       setUser(userObj);
+      fetch("https://api.chucknorris.io/jokes/categories")
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch(setCategories(json));
+        })
+        .catch((error) => console.error(error));
       callback();
     });
   };
 
   let signout = (callback) => {
     return fakeAuthProvider.signout(() => {
+      dispatch(clearCategories());
+      dispatch(clearViewedJokes());
       setUser(null);
       callback();
     });
