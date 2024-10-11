@@ -4,15 +4,15 @@ export const categoriesSlice = createSlice({
   name: "categories",
   initialState: [],
   reducers: {
-    addCategory: (state, action) => {
+    setCategories: (state, action) => {
       return [...new Set([...state, ...action.payload])];
     },
-    removeCategory: (state, action) => {
-      return state.filter((cat) => action.payload.includes(cat));
+    clearCategories: () => {
+      return [];
     },
   },
 });
 
-export const { addCategory, removeCategory } = categoriesSlice.actions;
+export const { setCategories, clearCategories } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addCategory } from "../Redux/categoriesSlice";
+import { setCategories, clearCategories } from "../Redux/categoriesSlice";
 
 const AuthContext = React.createContext();
 
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
       fetch("https://api.chucknorris.io/jokes/categories")
         .then((response) => response.json())
         .then((json) => {
-          dispatch(addCategory(json));
+          dispatch(setCategories(json));
         })
         .catch((error) => console.error(error));
       callback();
@@ -44,6 +44,7 @@ const AuthProvider = ({ children }) => {
 
   let signout = (callback) => {
     return fakeAuthProvider.signout(() => {
+      dispatch(clearCategories());
       setUser(null);
       callback();
     });
