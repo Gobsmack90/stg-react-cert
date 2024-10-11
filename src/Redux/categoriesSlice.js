@@ -5,10 +5,10 @@ export const categoriesSlice = createSlice({
   initialState: [],
   reducers: {
     addCategory: (state, action) => {
-      state = [...new Set([...state, ...action.categories])];
+      return [...new Set([...state, ...action.payload])];
     },
     removeCategory: (state, action) => {
-      state = state.filter((cat) => action.categories.includes(cat));
+      return state.filter((cat) => action.payload.includes(cat));
     },
   },
 });

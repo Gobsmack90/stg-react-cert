@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContentWrapper from "./ContentWrapper";
 import "./Categories.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
 import JokeModal from "./JokeModal";
+import { useSelector } from "react-redux";
 
 const Category = ({ cat, randomIndex, setSelectedCategory }) => {
   return (
@@ -13,60 +14,41 @@ const Category = ({ cat, randomIndex, setSelectedCategory }) => {
   );
 };
 
-class Categories extends React.Component {
-  constructor() {
-    super();
-    this.state = { categories: [], randomIndexes: [], selectedCategory: null };
-  }
-  setCategories = (newCategories) => {
-    this.setState({ categories: newCategories });
-  };
+/* The Utilize Hooks step wants me to convert a class component into a functional component.
+Additionally, modern Redux is assuming the use of functional components. So I've converted it early. */
+const Categories = () => {
+  const categories = useSelector((state) => state.categories);
 
-  setRandomIndexes = (newIndexArr) => {
-    this.setState({ randomIndexes: newIndexArr });
-  };
-
-  setSelectedCategory = (category) => {
-    this.setState({ selectedCategory: category });
-  };
+  const [randomIndexes, setRandomIndexes] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   //Get Api when component mounts.
-  componentDidMount() {
-    fetch("https://api.chucknorris.io/jokes/categories")
-      .then((response) => response.json())
-      .then((json) => {
-        this.setRandomIndexes(shuffledNorrisImageIndexes(json.length));
-        return this.setCategories(json);
-      })
-      .catch((error) => console.error(error));
-  }
+  useEffect(() => {
+    if (categories.length) {
+      setRandomIndexes(shuffledNorrisImageIndexes(categories.length));
+    }
+  }, [categories]);
 
-  render() {
-    return (
-      <ContentWrapper title="Categories">
-        <div
-          className={
-            this.state.selectedCategory ? "categoryList blur" : "categoryList"
-          }
-        >
-          {this.state.categories.map((e, i) => (
-            <Category
-              cat={e}
-              key={i}
-              randomIndex={this.state.randomIndexes[i]}
-              setSelectedCategory={this.setSelectedCategory}
-            />
-          ))}
-        </div>
-        {this.state.selectedCategory && (
-          <JokeModal
-            category={this.state.selectedCategory}
-            setCategory={this.setSelectedCategory}
+  return (
+    <ContentWrapper title="Categories">
+      <div className={selectedCategory ? "categoryList blur" : "categoryList"}>
+        {categories.map((e, i) => (
+          <Category
+            cat={e}
+            key={i}
+            randomIndex={randomIndexes[i]}
+            setSelectedCategory={setSelectedCategory}
           />
-        )}
-      </ContentWrapper>
-    );
-  }
-}
+        ))}
+      </div>
+      {selectedCategory && (
+        <JokeModal
+          category={selectedCategory}
+          setCategory={setSelectedCategory}
+        />
+      )}
+    </ContentWrapper>
+  );
+};
 
 export default Categories;
