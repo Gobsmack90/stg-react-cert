@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setCategories, clearCategories } from "../Redux/categoriesSlice";
+import { clearViewedJokes } from "../Redux/viewedJokesSlice";
 
 const AuthContext = React.createContext();
 
@@ -45,6 +46,7 @@ const AuthProvider = ({ children }) => {
   let signout = (callback) => {
     return fakeAuthProvider.signout(() => {
       dispatch(clearCategories());
+      dispatch(clearViewedJokes());
       setUser(null);
       callback();
     });

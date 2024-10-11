@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
 import Button from "./Button";
 import "./JokeModal.css";
+import { useDispatch } from "react-redux";
+import { addViewedJoke } from "../Redux/viewedJokesSlice";
 
 const JokeModal = ({ category, setCategory }) => {
   const [joke, setJoke] = useState(null);
   const [jokeDate, setJokeDate] = useState(null);
+
+  const dispatch = useDispatch();
 
   let randomIndexArr = shuffledNorrisImageIndexes(1);
 
@@ -26,8 +30,15 @@ const JokeModal = ({ category, setCategory }) => {
 
   useEffect(() => {
     if (joke) {
+      const viewedJokeData = {
+        joke: joke,
+        timestamp: Date.now(),
+        categories: joke.categories,
+      };
+      dispatch(addViewedJoke([viewedJokeData]));
       setJokeDate(new Date(joke.created_at));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [joke]);
 
   return (

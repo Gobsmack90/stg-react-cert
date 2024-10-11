@@ -5,14 +5,18 @@ export const viewedJokesSlice = createSlice({
   initialState: [],
   reducers: {
     addViewedJoke: (state, action) => {
-      return [...new Set([...state, ...action.jokes])];
+      return [...new Set([...state, ...action.payload])];
     },
     removeViewedJoke: (state, action) => {
-      return state.filter((joke) => action.jokes.includes(joke));
+      return state.filter((joke) => action.payload.includes(joke));
+    },
+    clearViewedJokes: () => {
+      return [];
     },
   },
 });
 
-export const { addViewedJoke, removeViewedJoke } = viewedJokesSlice.actions;
+export const { addViewedJoke, removeViewedJoke, clearViewedJokes } =
+  viewedJokesSlice.actions;
 
 export default viewedJokesSlice.reducer;
