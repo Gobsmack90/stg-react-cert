@@ -5,26 +5,22 @@ import "./Search.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
 
 const SearchResult = ({ value, added, randomIndex }) => {
-  const [isTruncated, setIsTruncated] = useState(false);
+  const [isTruncated, setIsTruncated] = useState(true);
+  const [hasViewed, setHasViewed] = useState(false);
 
   const dateAdded = new Date(added);
 
-  useEffect(() => {
-    if (value.length > 50) {
-      setIsTruncated(true);
-    }
-  }, [value]);
+  const viewJoke = () => {
+    setIsTruncated(!isTruncated);
+    setHasViewed(true);
+  };
 
   return (
     <div
-      onClick={() => {
-        if (value.length > 50) {
-          return setIsTruncated(!isTruncated);
-        }
-      }}
-      className={value.length > 50 ? "searchResult canClick" : "searchResult"}
+      onClick={viewJoke}
+      className={hasViewed ? "searchResult hasViewed" : "searchResult"}
     >
-      <NorrisThumb chosenIndex={randomIndex} />
+      {!isTruncated && <NorrisThumb chosenIndex={randomIndex} />}
       <div className="searchResultContent">
         <p>{isTruncated ? value.substring(0, 50) + "..." : value}</p>
         <div className="searchResultSubDetails">
@@ -32,11 +28,9 @@ const SearchResult = ({ value, added, randomIndex }) => {
             added {dateAdded.getMonth() + 1}-{dateAdded.getDate()}-
             {dateAdded.getFullYear()}
           </p>
-          {value.length > 50 && (
-            <Button onClick={() => setIsTruncated(!isTruncated)} type="button">
-              {isTruncated ? "expand" : "collapse"}
-            </Button>
-          )}
+          <Button onClick={viewJoke} type="button">
+            {isTruncated ? "view" : "hide"}
+          </Button>
         </div>
       </div>
     </div>
@@ -71,6 +65,7 @@ const Search = () => {
 
   useEffect(() => {
     if (results) {
+      console.log(results);
       setRandomIndexes(shuffledNorrisImageIndexes(results.total));
     }
   }, [results]);

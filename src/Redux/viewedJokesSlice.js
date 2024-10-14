@@ -1,14 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export const viewedJokesSlice = createSlice({
   name: "viewedJokes",
   initialState: [],
   reducers: {
     addViewedJoke: (state, action) => {
-      return [...new Set([...state, ...action.payload])];
-    },
-    removeViewedJoke: (state, action) => {
-      return state.filter((joke) => action.payload.includes(joke));
+      //Ensure duplicate jokes aren't added.
+      const newNoDuplicates = current(state).filter((joke) => {
+        for (let i = 0; i < action.payload.length; i++) {
+          if (joke.joke.id === action.payload[i].joke.id) {
+            return false;
+          }
+        }
+        return true;
+      });
+
+      return [...newNoDuplicates, ...action.payload];
     },
     clearViewedJokes: () => {
       return [];
@@ -16,7 +23,6 @@ export const viewedJokesSlice = createSlice({
   },
 });
 
-export const { addViewedJoke, removeViewedJoke, clearViewedJokes } =
-  viewedJokesSlice.actions;
+export const { addViewedJoke, clearViewedJokes } = viewedJokesSlice.actions;
 
 export default viewedJokesSlice.reducer;
