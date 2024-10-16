@@ -3,33 +3,55 @@ import ContentWrapper from "./ContentWrapper";
 import Button from "./Button";
 import "./Search.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addViewedJoke } from "../Redux/viewedJokesSlice";
+import { useAuth } from "./AuthProvider";
 
-const SearchResult = ({ value, added, randomIndex }) => {
+const SearchResult = ({
+  joke,
+  categories,
+  added,
+  randomIndex,
+  hasBeenViewed,
+}) => {
   const [isTruncated, setIsTruncated] = useState(true);
-  const [hasViewed, setHasViewed] = useState(false);
+  const [isViewed, setIsViewed] = useState(hasBeenViewed);
+
+  const dispatch = useDispatch();
 
   const dateAdded = new Date(added);
 
   //make it so that when you view a joke you call api for that joke to get category and stuff. then add that to viewed jokes.
   const viewJoke = () => {
     setIsTruncated(!isTruncated);
-    setHasViewed(true);
+    if (!isViewed) {
+      const viewedJokeData = {
+        joke: joke,
+        timestamp: Date.now(),
+        categories: categories,
+      };
+      dispatch(addViewedJoke([viewedJokeData]));
+      setIsViewed(true);
+    }
   };
 
   return (
     <div
       onClick={viewJoke}
-      className={hasViewed ? "searchResult hasViewed" : "searchResult"}
+      className={isViewed ? "searchResult hasViewed" : "searchResult"}
     >
       {!isTruncated && <NorrisThumb chosenIndex={randomIndex} />}
       <div className="searchResultContent">
-        <p>{isTruncated ? value.substring(0, 50) + "..." : value}</p>
+        <p>{isTruncated ? joke.value.substring(0, 50) + "..." : joke.value}</p>
         <div className="searchResultSubDetails">
-          <p>
-            added {dateAdded.getMonth() + 1}-{dateAdded.getDate()}-
-            {dateAdded.getFullYear()}
-          </p>
+          <div>
+            <p>Category: {categories.length > 0 ? categories : "none"}</p>
+            <p>
+              added {dateAdded.getMonth() + 1}-{dateAdded.getDate()}-
+              {dateAdded.getFullYear()}
+            </p>
+          </div>
+
           <Button onClick={viewJoke} type="button">
             {isTruncated ? "view" : "hide"}
           </Button>
@@ -40,49 +62,27 @@ const SearchResult = ({ value, added, randomIndex }) => {
 };
 
 const Search = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [results, setResults] = useState(null);
   const [cleanResults, setCleanResults] = useState(null);
   const [randomIndexes, setRandomIndexes] = useState([]);
 
+  let auth = useAuth();
   const viewedJokes = useSelector((state) => state.viewedJokes);
 
   useEffect(() => {
-    if (searchInput.length > 2 && searchInput.length < 121) {
-      //Wait for user to stop typing for 1 sec before calling api.
-      const delayDebounceFn = setTimeout(() => {
-        fetch(`https://api.chucknorris.io/jokes/search?query=${searchInput}`)
-          .then((response) => response.json())
-          .then((json) => {
-            return setResults(json);
-          })
-          .catch((error) => console.error(error));
-      }, 1000);
-
-      return () => clearTimeout(delayDebounceFn);
-    }
-
-    if (searchInput.length === 0 && results) {
-      setResults(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput]);
-
-  useEffect(() => {
-    if (results) {
+    if (auth.results) {
       setCleanResults(
-        results.result.filter((e) => !e.categories.includes("explicit"))
+        auth.results.result.filter((e) => !e.categories.includes("explicit"))
       );
+    } else {
+      setCleanResults(null);
     }
-  }, [results]);
+  }, [auth.results]);
 
   useEffect(() => {
-    if (cleanResults && viewedJokes) {
-      console.log(cleanResults);
-      console.log(viewedJokes);
+    if (cleanResults) {
       setRandomIndexes(shuffledNorrisImageIndexes(cleanResults.length));
     }
-  }, [cleanResults, viewedJokes]);
+  }, [cleanResults]);
 
   return (
     <ContentWrapper title="Search">
@@ -92,12 +92,12 @@ const Search = () => {
             Search:{" "}
             <input
               type="search"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
+              value={auth.searchInput}
+              onChange={(e) => auth.setSearchInput(e.target.value)}
             />{" "}
             <Button
-              onClick={() => setSearchInput("")}
-              isDisabled={searchInput.length < 1}
+              onClick={() => auth.setSearchInput("")}
+              isDisabled={auth.searchInput.length < 1}
               type="button"
             >
               Clear
@@ -110,13 +110,17 @@ const Search = () => {
         {cleanResults && <div>{cleanResults.length} results</div>}
       </div>
       {cleanResults &&
+        viewedJokes &&
         cleanResults.map((r, i) => {
+          const hasBeenViewed = viewedJokes.some((e) => e.joke.id === r.id);
           return (
             <SearchResult
               key={i}
-              value={r.value}
+              joke={r}
+              categories={r.categories}
               added={r.created_at}
               randomIndex={randomIndexes[i]}
+              hasBeenViewed={hasBeenViewed}
             />
           );
         })}

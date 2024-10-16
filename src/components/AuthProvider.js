@@ -27,7 +27,31 @@ const fakeAuthProvider = {
 
 const AuthProvider = ({ children }) => {
   let [user, setUser] = React.useState(null);
+  //Help the Search results to persist after navigating away from search.
+  let [searchInput, setSearchInput] = React.useState("");
+  let [results, setResults] = React.useState(null);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (searchInput.length > 2 && searchInput.length < 121) {
+      //Wait for user to stop typing for 1 sec before calling api.
+      const delayDebounceFn = setTimeout(() => {
+        fetch(`https://api.chucknorris.io/jokes/search?query=${searchInput}`)
+          .then((response) => response.json())
+          .then((json) => {
+            return setResults(json);
+          })
+          .catch((error) => console.error(error));
+      }, 1000);
+
+      return () => clearTimeout(delayDebounceFn);
+    }
+
+    if (searchInput.length === 0 && results) {
+      setResults(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput]);
 
   let signin = (newUser, callback) => {
     return fakeAuthProvider.signin(() => {
@@ -52,7 +76,7 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  let value = { user, signin, signout };
+  let value = { user, signin, signout, results, searchInput, setSearchInput };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
