@@ -7,8 +7,12 @@
   border-bottom: 1px solid gainsboro;
 }
 
+.searchWarn {
+  color: rgb(100, 134, 179);
+}
+
 .searchResult {
-  background-color: rgb(238, 238, 238);
+  background-color: rgb(241, 241, 241);
   display: flex;
   gap: 10px;
   padding: 10px;
@@ -19,17 +23,19 @@
 }
 
 .searchResult:hover {
-  background-color: gainsboro;
+  background-color: rgb(218, 203, 203);
+  border: 1px solid rgb(170, 160, 160);
   cursor: pointer;
 }
 
 .hasViewed {
-  background-color: rgb(218, 203, 203);
-  border: 1px solid rgb(170, 160, 160);
+  background-color: rgb(196, 196, 196);
+  border: 1px solid rgb(196, 196, 196);
 }
 
 .hasViewed:hover {
   background-color: rgb(170, 160, 160);
+  border: 1px solid rgb(170, 160, 160);
 }
 
 .searchResultContent {

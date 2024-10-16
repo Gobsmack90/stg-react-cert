@@ -3,6 +3,7 @@ import ContentWrapper from "./ContentWrapper";
 import Button from "./Button";
 import "./Search.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
+import { useSelector } from "react-redux";
 
 const SearchResult = ({ value, added, randomIndex }) => {
   const [isTruncated, setIsTruncated] = useState(true);
@@ -10,6 +11,7 @@ const SearchResult = ({ value, added, randomIndex }) => {
 
   const dateAdded = new Date(added);
 
+  //make it so that when you view a joke you call api for that joke to get category and stuff. then add that to viewed jokes.
   const viewJoke = () => {
     setIsTruncated(!isTruncated);
     setHasViewed(true);
@@ -40,7 +42,10 @@ const SearchResult = ({ value, added, randomIndex }) => {
 const Search = () => {
   const [searchInput, setSearchInput] = useState("");
   const [results, setResults] = useState(null);
+  const [cleanResults, setCleanResults] = useState(null);
   const [randomIndexes, setRandomIndexes] = useState([]);
+
+  const viewedJokes = useSelector((state) => state.viewedJokes);
 
   useEffect(() => {
     if (searchInput.length > 2 && searchInput.length < 121) {
@@ -65,33 +70,47 @@ const Search = () => {
 
   useEffect(() => {
     if (results) {
-      console.log(results);
-      setRandomIndexes(shuffledNorrisImageIndexes(results.total));
+      setCleanResults(
+        results.result.filter((e) => !e.categories.includes("explicit"))
+      );
     }
   }, [results]);
+
+  useEffect(() => {
+    if (cleanResults && viewedJokes) {
+      console.log(cleanResults);
+      console.log(viewedJokes);
+      setRandomIndexes(shuffledNorrisImageIndexes(cleanResults.length));
+    }
+  }, [cleanResults, viewedJokes]);
 
   return (
     <ContentWrapper title="Search">
       <div className="search">
-        <label>
-          Search:{" "}
-          <input
-            type="search"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />{" "}
-          <Button
-            onClick={() => setSearchInput("")}
-            isDisabled={searchInput.length < 1}
-            type="button"
-          >
-            Clear
-          </Button>
-        </label>
-        {results && <div>{results.total} results</div>}
+        <div>
+          <label>
+            Search:{" "}
+            <input
+              type="search"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />{" "}
+            <Button
+              onClick={() => setSearchInput("")}
+              isDisabled={searchInput.length < 1}
+              type="button"
+            >
+              Clear
+            </Button>
+          </label>
+          <p className="searchWarn">
+            Search results filter out explicit content.
+          </p>
+        </div>
+        {cleanResults && <div>{cleanResults.length} results</div>}
       </div>
-      {results &&
-        results.result.map((r, i) => {
+      {cleanResults &&
+        cleanResults.map((r, i) => {
           return (
             <SearchResult
               key={i}
