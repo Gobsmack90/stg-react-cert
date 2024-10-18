@@ -24,12 +24,16 @@ const fakeAuthProvider = {
     setTimeout(callback, 1000);
   },
 };
-
 const AuthProvider = ({ children }) => {
   let [user, setUser] = React.useState(null);
   //Help the Search results to persist after navigating away from search.
   let [searchInput, setSearchInput] = React.useState("");
   let [results, setResults] = React.useState(null);
+  //Help the jokes sort page persist after navigating away.
+  let [currentSort, setCurrentSort] = React.useState({
+    active: "timestamp",
+    ascending: false,
+  });
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -76,7 +80,16 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  let value = { user, signin, signout, results, searchInput, setSearchInput };
+  let value = {
+    user,
+    signin,
+    signout,
+    results,
+    searchInput,
+    setSearchInput,
+    currentSort,
+    setCurrentSort,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -17,12 +17,19 @@ export const viewedJokesSlice = createSlice({
 
       return [...newNoDuplicates, ...action.payload];
     },
+    removeViewedJoke: (state, action) => {
+      const removedJokeIndex = current(state).indexOf(action.payload);
+      if (removedJokeIndex > -1) {
+        state.splice(removedJokeIndex, 1);
+      }
+    },
     clearViewedJokes: () => {
       return [];
     },
   },
 });
 
-export const { addViewedJoke, clearViewedJokes } = viewedJokesSlice.actions;
+export const { addViewedJoke, removeViewedJoke, clearViewedJokes } =
+  viewedJokesSlice.actions;
 
 export default viewedJokesSlice.reducer;

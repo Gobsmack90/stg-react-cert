@@ -45,7 +45,7 @@ const SearchResult = ({
         <p>{isTruncated ? joke.value.substring(0, 50) + "..." : joke.value}</p>
         <div className="searchResultSubDetails">
           <div>
-            <p>Category: {categories.length > 0 ? categories : "none"}</p>
+            {categories.length > 0 && <p>category: {categories}</p>}
             <p>
               added {dateAdded.getMonth() + 1}-{dateAdded.getDate()}-
               {dateAdded.getFullYear()}
