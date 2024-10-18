@@ -3,40 +3,58 @@ import ContentWrapper from "./ContentWrapper";
 import Button from "./Button";
 import "./Search.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
+import { useDispatch, useSelector } from "react-redux";
+import { addViewedJoke } from "../Redux/viewedJokesSlice";
+import { useAuth } from "./AuthProvider";
 
-const SearchResult = ({ value, added, randomIndex }) => {
-  const [isTruncated, setIsTruncated] = useState(false);
+const SearchResult = ({
+  joke,
+  categories,
+  added,
+  randomIndex,
+  hasBeenViewed,
+}) => {
+  const [isTruncated, setIsTruncated] = useState(true);
+  const [isViewed, setIsViewed] = useState(hasBeenViewed);
+
+  const dispatch = useDispatch();
 
   const dateAdded = new Date(added);
 
-  useEffect(() => {
-    if (value.length > 50) {
-      setIsTruncated(true);
+  //make it so that when you view a joke you call api for that joke to get category and stuff. then add that to viewed jokes.
+  const viewJoke = () => {
+    setIsTruncated(!isTruncated);
+    if (!isViewed) {
+      const viewedJokeData = {
+        joke: joke,
+        timestamp: Date.now(),
+        categories: categories,
+      };
+      dispatch(addViewedJoke([viewedJokeData]));
+      setIsViewed(true);
     }
-  }, [value]);
+  };
 
   return (
     <div
-      onClick={() => {
-        if (value.length > 50) {
-          return setIsTruncated(!isTruncated);
-        }
-      }}
-      className={value.length > 50 ? "searchResult canClick" : "searchResult"}
+      onClick={viewJoke}
+      className={isViewed ? "searchResult hasViewed" : "searchResult"}
     >
-      <NorrisThumb chosenIndex={randomIndex} />
+      {!isTruncated && <NorrisThumb chosenIndex={randomIndex} />}
       <div className="searchResultContent">
-        <p>{isTruncated ? value.substring(0, 50) + "..." : value}</p>
+        <p>{isTruncated ? joke.value.substring(0, 50) + "..." : joke.value}</p>
         <div className="searchResultSubDetails">
-          <p>
-            added {dateAdded.getMonth() + 1}-{dateAdded.getDate()}-
-            {dateAdded.getFullYear()}
-          </p>
-          {value.length > 50 && (
-            <Button onClick={() => setIsTruncated(!isTruncated)} type="button">
-              {isTruncated ? "expand" : "collapse"}
-            </Button>
-          )}
+          <div>
+            {categories.length > 0 && <p>category: {categories}</p>}
+            <p>
+              added {dateAdded.getMonth() + 1}-{dateAdded.getDate()}-
+              {dateAdded.getFullYear()}
+            </p>
+          </div>
+
+          <Button onClick={viewJoke} type="button">
+            {isTruncated ? "view" : "hide"}
+          </Button>
         </div>
       </div>
     </div>
@@ -44,65 +62,65 @@ const SearchResult = ({ value, added, randomIndex }) => {
 };
 
 const Search = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [results, setResults] = useState(null);
+  const [cleanResults, setCleanResults] = useState(null);
   const [randomIndexes, setRandomIndexes] = useState([]);
 
-  useEffect(() => {
-    if (searchInput.length > 2 && searchInput.length < 121) {
-      //Wait for user to stop typing for 1 sec before calling api.
-      const delayDebounceFn = setTimeout(() => {
-        fetch(`https://api.chucknorris.io/jokes/search?query=${searchInput}`)
-          .then((response) => response.json())
-          .then((json) => {
-            return setResults(json);
-          })
-          .catch((error) => console.error(error));
-      }, 1000);
-
-      return () => clearTimeout(delayDebounceFn);
-    }
-
-    if (searchInput.length === 0 && results) {
-      setResults(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput]);
+  let auth = useAuth();
+  const viewedJokes = useSelector((state) => state.viewedJokes);
 
   useEffect(() => {
-    if (results) {
-      setRandomIndexes(shuffledNorrisImageIndexes(results.total));
+    if (auth.results) {
+      setCleanResults(
+        auth.results.result.filter((e) => !e.categories.includes("explicit"))
+      );
+    } else {
+      setCleanResults(null);
     }
-  }, [results]);
+  }, [auth.results]);
+
+  useEffect(() => {
+    if (cleanResults) {
+      setRandomIndexes(shuffledNorrisImageIndexes(cleanResults.length));
+    }
+  }, [cleanResults]);
 
   return (
     <ContentWrapper title="Search">
       <div className="search">
-        <label>
-          Search:{" "}
-          <input
-            type="search"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />{" "}
-          <Button
-            onClick={() => setSearchInput("")}
-            isDisabled={searchInput.length < 1}
-            type="button"
-          >
-            Clear
-          </Button>
-        </label>
-        {results && <div>{results.total} results</div>}
+        <div>
+          <label>
+            Search:{" "}
+            <input
+              type="search"
+              value={auth.searchInput}
+              onChange={(e) => auth.setSearchInput(e.target.value)}
+            />{" "}
+            <Button
+              onClick={() => auth.setSearchInput("")}
+              isDisabled={auth.searchInput.length < 1}
+              type="button"
+            >
+              Clear
+            </Button>
+          </label>
+          <p className="searchWarn">
+            Search results filter out explicit content.
+          </p>
+        </div>
+        {cleanResults && <div>{cleanResults.length} results</div>}
       </div>
-      {results &&
-        results.result.map((r, i) => {
+      {cleanResults &&
+        viewedJokes &&
+        cleanResults.map((r, i) => {
+          const hasBeenViewed = viewedJokes.some((e) => e.joke.id === r.id);
           return (
             <SearchResult
               key={i}
-              value={r.value}
+              joke={r}
+              categories={r.categories}
               added={r.created_at}
               randomIndex={randomIndexes[i]}
+              hasBeenViewed={hasBeenViewed}
             />
           );
         })}

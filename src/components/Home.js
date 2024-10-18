@@ -18,7 +18,7 @@ const sectionArr = [
   },
   {
     heading: "Jokes",
-    details: "See a funny joke.",
+    details: "See all the jokes you already looked at.",
     url: "/jokes",
   },
 ];

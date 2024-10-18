@@ -1,0 +1,44 @@
+.headings {
+  display: flex;
+  font-weight: 500;
+  font-size: large;
+  height: 25px;
+  border-bottom: 2px solid darkblue;
+}
+
+.row {
+  display: flex;
+  padding: 10px 5px;
+  border-bottom: 1px solid gainsboro;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.timestamp {
+  width: 20%;
+}
+
+.category {
+  text-transform: capitalize;
+  width: 20%;
+}
+
+.value {
+  width: 50%;
+}
+
+.remove {
+  width: 10%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+.clickable {
+  &:hover {
+    cursor: pointer;
+    background-color: gainsboro;
+  }
+}
