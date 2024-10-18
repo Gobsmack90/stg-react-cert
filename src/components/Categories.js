@@ -14,8 +14,7 @@ const Category = ({ cat, randomIndex, setSelectedCategory }) => {
   );
 };
 
-/* The Utilize Hooks step wants me to convert a class component into a functional component.
-Additionally, modern Redux is assuming the use of functional components. So I've converted it early. */
+/* Converted this from a class component back in the state-management branch */
 const Categories = () => {
   const categories = useSelector((state) => state.categories);
 
