@@ -3,9 +3,9 @@ import ContentWrapper from "./ContentWrapper";
 import Button from "./Button";
 import "./Search.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
-import { useDispatch, useSelector } from "react-redux";
 import { addViewedJoke } from "../Redux/viewedJokesSlice";
 import { useAuth } from "./AuthProvider";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 
 const SearchResult = ({
   joke,
@@ -17,7 +17,7 @@ const SearchResult = ({
   const [isTruncated, setIsTruncated] = useState(true);
   const [isViewed, setIsViewed] = useState(hasBeenViewed);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const dateAdded = new Date(added);
 
@@ -66,7 +66,7 @@ const Search = () => {
   const [randomIndexes, setRandomIndexes] = useState([]);
 
   let auth = useAuth();
-  const viewedJokes = useSelector((state) => state.viewedJokes);
+  const viewedJokes = useAppSelector((state) => state.viewedJokes);
 
   useEffect(() => {
     if (auth.results) {

@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
 import Button from "./Button";
 import "./JokeModal.css";
-import { useDispatch } from "react-redux";
 import { addViewedJoke } from "../Redux/viewedJokesSlice";
+import { useAppDispatch } from "../Redux/hooks";
 
 const JokeModal = ({ category, setCategory }) => {
   const [joke, setJoke] = useState(null);
   const [jokeDate, setJokeDate] = useState(null);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   let randomIndexArr = shuffledNorrisImageIndexes(1);
 

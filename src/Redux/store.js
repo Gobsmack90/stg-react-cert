@@ -1,10 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import categoriesReducer from "./categoriesSlice";
 import viewedJokesReducer from "./viewedJokesSlice";
 
-export default configureStore({
-  reducer: {
-    categories: categoriesReducer,
-    viewedJokes: viewedJokesReducer,
-  },
+// Create the root reducer separately so we can extract the RootState type
+const rootReducer = combineReducers({
+  categories: categoriesReducer,
+  viewedJokes: viewedJokesReducer,
 });
+
+export const setupStore = (preloadedState) => {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+  });
+};

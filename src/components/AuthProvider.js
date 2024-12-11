@@ -1,7 +1,7 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { setCategories, clearCategories } from "../Redux/categoriesSlice";
 import { clearViewedJokes } from "../Redux/viewedJokesSlice";
+import { useAppDispatch } from "../Redux/hooks";
 
 const AuthContext = React.createContext();
 
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
     active: "timestamp",
     ascending: false,
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     if (searchInput.length > 2 && searchInput.length < 121) {
