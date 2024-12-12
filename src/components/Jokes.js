@@ -106,7 +106,7 @@ const Jokes = () => {
             dateViewed.getHours() > 12 ? "PM" : "AM"
           }`;
           return (
-            <div className="row" key={i}>
+            <div data-testid="jokeRow" className="row" key={i}>
               <p className="timestamp">
                 {timeString}
                 <br />

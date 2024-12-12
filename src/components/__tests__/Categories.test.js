@@ -5,7 +5,7 @@ import { renderWithProviders } from "../../utils/test-utils";
 it("should render", async () => {
   const initialCategories = ["cat", "dog", "person"];
 
-  const { getByText } = renderWithProviders(<Categories />, {
+  renderWithProviders(<Categories />, {
     preloadedState: {
       categories: initialCategories,
     },
