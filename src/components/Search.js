@@ -39,6 +39,7 @@ const SearchResult = ({
     <div
       onClick={viewJoke}
       className={isViewed ? "searchResult hasViewed" : "searchResult"}
+      data-testid="searchedJoke"
     >
       {!isTruncated && <NorrisThumb chosenIndex={randomIndex} />}
       <div className="searchResultContent">
