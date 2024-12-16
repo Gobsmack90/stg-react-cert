@@ -48,6 +48,7 @@ const Login = () => {
       <form
         onSubmit={handleSubmit((data) => formSubmit(data))}
         className="loginForm"
+        data-testid="loginForm"
       >
         <label>
           Email:{" "}
