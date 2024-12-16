@@ -5,7 +5,7 @@ it("renders a button", () => {
   render(
     <Button
       isLarge={true}
-      onClick={() => console.log("hello")}
+      onClick={() => null}
       isDisabled={false}
       children={"hi"}
     />

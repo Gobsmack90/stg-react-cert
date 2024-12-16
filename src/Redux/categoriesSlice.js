@@ -4,6 +4,7 @@ export const categoriesSlice = createSlice({
   name: "categories",
   initialState: [],
   reducers: {
+    // #Spread Operator
     setCategories: (state, action) => {
       return [...new Set([...state, ...action.payload])];
     },

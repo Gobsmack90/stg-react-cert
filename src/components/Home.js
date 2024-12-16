@@ -5,6 +5,7 @@ import "./Home.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
 
 //create array of objects that contain details needed for sections. heading, details, url, img
+// #Blocked-scoped variable const
 const sectionArr = [
   {
     heading: "Categories",

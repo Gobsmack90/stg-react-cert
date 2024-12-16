@@ -5,6 +5,7 @@ import { useAppDispatch } from "../Redux/hooks";
 
 const AuthContext = React.createContext();
 
+// #React Hooks useContext
 export const useAuth = () => {
   return React.useContext(AuthContext);
 };
@@ -24,6 +25,7 @@ const fakeAuthProvider = {
     setTimeout(callback, 1000);
   },
 };
+// #React Context
 const AuthProvider = ({ children }) => {
   let [user, setUser] = React.useState(null);
   //Help the Search results to persist after navigating away from search.

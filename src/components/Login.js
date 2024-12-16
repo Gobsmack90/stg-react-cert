@@ -9,6 +9,7 @@ const Login = () => {
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // #Destructuring
   const {
     register,
     handleSubmit,
@@ -40,6 +41,7 @@ const Login = () => {
   }, [auth.user]);
 
   const loginBox = (
+    // #Styles
     <div className="loginBox">
       <h2 className="redirectMessage">
         Log in {from !== "/" ? " to view " + from : ""}

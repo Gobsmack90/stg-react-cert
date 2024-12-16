@@ -13,6 +13,7 @@ const JokeModal = ({ category, setCategory }) => {
 
   let randomIndexArr = shuffledNorrisImageIndexes(1);
 
+  //#Promise
   const fetchJokeByCategory = (category) => {
     fetch(`https://api.chucknorris.io/jokes/random?category=${category}`)
       .then((response) => response.json())
