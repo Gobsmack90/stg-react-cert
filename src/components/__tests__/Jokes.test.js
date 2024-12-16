@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { fireEvent, getByRole, screen, within } from "@testing-library/react";
 import { renderWithProviders } from "../../utils/test-utils";
 import Jokes from "../Jokes";
 import AuthProvider from "../AuthProvider";
@@ -86,4 +86,62 @@ it("sorts based on category and timestamp", async () => {
       /Chuck Norris walked into a bank during a robbery./i
     )
   ).toBeInTheDocument();
+});
+
+it("should remove a joke", async () => {
+  renderWithProviders(
+    <AuthProvider>
+      <Jokes />
+    </AuthProvider>,
+    {
+      preloadedState: {
+        viewedJokes: initialJokes,
+      },
+    }
+  );
+
+  const categoryDivs = await screen.findAllByTestId("jokeRow");
+  expect(categoryDivs.length).toBe(2);
+  expect(
+    within(categoryDivs[0]).getByText(
+      /Chuck Norris walked into a bank during a robbery./i
+    )
+  ).toBeInTheDocument();
+
+  const deleteButton = within(categoryDivs[0]).getByRole("button", {
+    name: "X",
+  });
+  fireEvent.click(deleteButton);
+
+  const categoryDivsAfter = await screen.findAllByTestId("jokeRow");
+  expect(categoryDivsAfter.length).toBe(1);
+});
+
+it("should clear all jokes", async () => {
+  renderWithProviders(
+    <AuthProvider>
+      <Jokes />
+    </AuthProvider>,
+    {
+      preloadedState: {
+        viewedJokes: initialJokes,
+      },
+    }
+  );
+
+  const categoryDivs = await screen.findAllByTestId("jokeRow");
+  expect(categoryDivs.length).toBe(2);
+  expect(
+    within(categoryDivs[0]).getByText(
+      /Chuck Norris walked into a bank during a robbery./i
+    )
+  ).toBeInTheDocument();
+
+  const clearButton = screen.getByRole("button", {
+    name: "Clear",
+  });
+  fireEvent.click(clearButton);
+
+  const categoryDivsAfter = screen.queryAllByTestId("jokeRow");
+  expect(categoryDivsAfter.length).toBe(0);
 });
