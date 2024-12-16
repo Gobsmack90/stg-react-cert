@@ -64,6 +64,7 @@ const Layout = () => {
 };
 
 const AuthStatus = () => {
+  // #Blocked-scoped variable let
   let auth = useAuth();
   let navigate = useNavigate();
 
@@ -107,6 +108,7 @@ const App = () => {
     return children;
   };
 
+  // #Routing
   return (
     <AuthProvider>
       <Routes>

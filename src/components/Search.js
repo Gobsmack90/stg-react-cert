@@ -22,6 +22,7 @@ const SearchResult = ({
   const dateAdded = new Date(added);
 
   //make it so that when you view a joke you call api for that joke to get category and stuff. then add that to viewed jokes.
+  // #Functional Components
   const viewJoke = () => {
     setIsTruncated(!isTruncated);
     if (!isViewed) {
@@ -35,7 +36,9 @@ const SearchResult = ({
     }
   };
 
+  // #JSX #Rendering Elements
   return (
+    // #Event handling
     <div
       onClick={viewJoke}
       className={isViewed ? "searchResult hasViewed" : "searchResult"}
@@ -63,12 +66,15 @@ const SearchResult = ({
 };
 
 const Search = () => {
+  // #Closures
   const [cleanResults, setCleanResults] = useState(null);
   const [randomIndexes, setRandomIndexes] = useState([]);
 
   let auth = useAuth();
+  // #Arrow Function
   const viewedJokes = useAppSelector((state) => state.viewedJokes);
 
+  // #Filter function
   useEffect(() => {
     if (auth.results) {
       setCleanResults(

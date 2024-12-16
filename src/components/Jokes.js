@@ -7,9 +7,11 @@ import { clearViewedJokes, removeViewedJoke } from "../Redux/viewedJokesSlice";
 import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 
 const Jokes = () => {
+  // #State
   const [sortedJokes, setSortedJokes] = useState(null);
 
   let auth = useAuth();
+  // #Redux Reducers
   const dispatch = useAppDispatch();
 
   const viewedJokes = useAppSelector((state) => state.viewedJokes);

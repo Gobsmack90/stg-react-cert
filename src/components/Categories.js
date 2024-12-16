@@ -19,13 +19,16 @@ const Category = ({ cat, randomIndex, setSelectedCategory }) => {
 };
 
 /* Converted this from a class component back in the state-management branch */
+// #Class Components
 const Categories = () => {
   const categories = useAppSelector((state) => state.categories);
 
+  // #React Hooks useState
   const [randomIndexes, setRandomIndexes] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   //render categories saved in store.
+  // #React Hooks useEffect
   useEffect(() => {
     if (categories.length) {
       setRandomIndexes(shuffledNorrisImageIndexes(categories.length));
@@ -34,6 +37,10 @@ const Categories = () => {
 
   return (
     <ContentWrapper title="Categories">
+      {/*
+        #Event Handling
+        #Lists & Keys
+      */}
       <div className={selectedCategory ? "categoryList blur" : "categoryList"}>
         {categories.map((e, i) => (
           <Category

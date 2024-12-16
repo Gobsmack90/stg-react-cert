@@ -1,5 +1,6 @@
 import "./Button.css";
 
+// #Props
 const Button = ({ isLarge, onClick, isDisabled, type, children }) => {
   return (
     <button
