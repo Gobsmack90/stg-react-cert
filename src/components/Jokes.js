@@ -1,18 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
 import ContentWrapper from "./ContentWrapper";
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import "./Jokes.css";
 import Button from "./Button";
 import { clearViewedJokes, removeViewedJoke } from "../Redux/viewedJokesSlice";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 
 const Jokes = () => {
   const [sortedJokes, setSortedJokes] = useState(null);
 
   let auth = useAuth();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const viewedJokes = useSelector((state) => state.viewedJokes);
+  const viewedJokes = useAppSelector((state) => state.viewedJokes);
 
   const setSort = (column, isAsc) => {
     return auth.setCurrentSort({
@@ -106,7 +106,7 @@ const Jokes = () => {
             dateViewed.getHours() > 12 ? "PM" : "AM"
           }`;
           return (
-            <div className="row" key={i}>
+            <div data-testid="jokeRow" className="row" key={i}>
               <p className="timestamp">
                 {timeString}
                 <br />

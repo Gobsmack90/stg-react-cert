@@ -3,11 +3,15 @@ import ContentWrapper from "./ContentWrapper";
 import "./Categories.css";
 import NorrisThumb, { shuffledNorrisImageIndexes } from "./NorrisThumb";
 import JokeModal from "./JokeModal";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../Redux/hooks";
 
 const Category = ({ cat, randomIndex, setSelectedCategory }) => {
   return (
-    <section className="categoryInfo" onClick={() => setSelectedCategory(cat)}>
+    <section
+      className="categoryInfo"
+      data-testid="categoryThumb"
+      onClick={() => setSelectedCategory(cat)}
+    >
       <NorrisThumb chosenIndex={randomIndex} />
       <h2 className="categoryHead">{cat}</h2>
     </section>
@@ -16,12 +20,12 @@ const Category = ({ cat, randomIndex, setSelectedCategory }) => {
 
 /* Converted this from a class component back in the state-management branch */
 const Categories = () => {
-  const categories = useSelector((state) => state.categories);
+  const categories = useAppSelector((state) => state.categories);
 
   const [randomIndexes, setRandomIndexes] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  //Get Api when component mounts.
+  //render categories saved in store.
   useEffect(() => {
     if (categories.length) {
       setRandomIndexes(shuffledNorrisImageIndexes(categories.length));
